@@ -16,3 +16,13 @@ When I predict keypoints from the video, I used commends before prediction.
 pip3 install opencv-python  # install opencv
 conda update ffmpeg  # update ffmpeg
 ```
+
+### prediction commends
+#### prediction single image
+`python -m openpifpaf.predict ./27305_41109_79.jpg --image-output --json-output`
+#### prediction single image to json file
+`python -m json.tool ./27305_41109_79.jpg.predictions.json`
+#### prediction video as body points
+`python3 -m openpifpaf.video --source ./sample_video.mp4 --video-output --json-output`
+#### prediction video as wholebody points
+`python3 -m openpifpaf.video --source ./sample_video.mp4 --video-output --json-output --checkpoint=shufflenetv2k16-wholebody`
