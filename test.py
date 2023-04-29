@@ -2,10 +2,11 @@ import json
 import os
 from glob import glob
 from tensorflow.keras.models import model_from_json
-from utils import DataLoader_keypoint
+from utils import DataLoader_keypoint, gpu_limit
 from config import args
 import numpy as np
 from tqdm import tqdm
+import tensorflow as tf
 
 def getTrainedModel(targetPath):
     savedDirs = glob(os.path.join(targetPath, 'best_model_*'))
@@ -34,17 +35,22 @@ def getTrainedModel(targetPath):
 
 
 if __name__ == '__main__':
+    gpu_limit(1)
+
     path = os.path.join(os.getcwd(), 'train_log_100')
     model, best_epoch, best_metric = getTrainedModel(path)
     model.summary()
 
+
     dataloader = DataLoader_keypoint("Validation", True, args.batch_size, True)
+    # dataloader = DataLoader_keypoint("Validation", True, 1, True)
 
     confusion_matrix = np.zeros((100, 100))
 
     for i in range(len(dataloader)):
         x, y = dataloader[i]
-        print("Epoch: {:>3} / train: {:>6}/{:>6}".format(e+1, i+1, len(dataloader)), end='\r')
+        print(x.shape, y.shape)
+        print("test: {:>6}/{:>6}".format(i+1, len(dataloader)), end='\r')
 
         y_pred = model(x)
 
@@ -54,5 +60,8 @@ if __name__ == '__main__':
             confusion_matrix[true_idx, pred_idx] += 1
 
         save_dir = os.path.join(path, 'test')
-        os.makedirs(save_dir)
+        if not os.path.isdir(save_dir):
+            print("make dir")
+            print(save_dir)
+            os.makedirs(save_dir)
         np.save(os.path.join(save_dir, 'confusion_matrix.npy'), confusion_matrix)

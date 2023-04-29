@@ -21,6 +21,7 @@ class DataLoader_keypoint():
         
         self.mode = mode
         self.data_dir = os.path.join(os.getcwd(), 'data', 'keypoint')
+        print(self.data_dir)
         
         if not os.path.isdir(self.data_dir):
             os.makedirs(os.path.join(self.data_dir, self.mode))
@@ -214,9 +215,11 @@ class DataLoader_keypoint():
 
         del_paths = np.load(os.path.join(os.getcwd(), 'EDA', 'del_path_1.npy'))
 
+        '''
         for path in del_paths:
             idx = list(path_lists).index(path)
             path_lists = np.delete(path_lists, idx)
+        '''
 
 
         if self.mode == 'Training':

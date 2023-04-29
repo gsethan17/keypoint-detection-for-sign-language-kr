@@ -20,20 +20,20 @@ if __name__ == "__main__":
 
     model.summary()
 
-    optimizer = tf.keras.optimizers.Adam()
+    optimizer = tf.keras.optimizers.Adam(0.01)
 
     loss_f = tf.keras.losses.CategoricalCrossentropy()
     metric_1 = tf.keras.metrics.CategoricalCrossentropy()
     metric_2 = tf.keras.metrics.CategoricalAccuracy()
 
 
-    log_train_dir = os.path.join(os.getcwd(), 'train_log_deep', 'train_epoch')
+    log_train_dir = os.path.join(os.getcwd(), 'train_log_10', 'train_epoch')
     writer_e_train = tf.summary.create_file_writer(log_train_dir)
-    log_val_dir = os.path.join(os.getcwd(), 'train_log_deep', 'val_epoch')
+    log_val_dir = os.path.join(os.getcwd(), 'train_log_10', 'val_epoch')
     writer_e_val = tf.summary.create_file_writer(log_val_dir)
-    log_train_dir = os.path.join(os.getcwd(), 'train_log_deep', 'train_step')
+    log_train_dir = os.path.join(os.getcwd(), 'train_log_10', 'train_step')
     writer_s_train = tf.summary.create_file_writer(log_train_dir)
-    log_val_dir = os.path.join(os.getcwd(), 'train_log_deep', 'val_step')
+    log_val_dir = os.path.join(os.getcwd(), 'train_log_10', 'val_step')
     writer_s_val = tf.summary.create_file_writer(log_val_dir)
 
     train_cnt = 0
