@@ -5,6 +5,7 @@ from tensorflow.keras.models import model_from_json
 from utils import DataLoader_keypoint
 from config import args
 import numpy as np
+from tqdm import tqdm
 
 def getTrainedModel(targetPath):
     savedDirs = glob(os.path.join(targetPath, 'best_model_*'))
@@ -47,7 +48,7 @@ if __name__ == '__main__':
 
         y_pred = model(x)
 
-        for j in range(x.shape[0]):
+        for j in tqdm(range(x.shape[0])):
             true_idx = np.argmax(y[j])
             pred_idx = np.argmax(y_pred[j])
             confusion_matrix[true_idx, pred_idx] += 1
