@@ -37,8 +37,9 @@ def getTrainedModel(targetPath):
 if __name__ == '__main__':
     gpu_limit(1)
 
-    path = os.path.join(os.getcwd(), 'train_log_100')
+    path = os.path.join(os.getcwd(), 'train_log_10')
     model, best_epoch, best_metric = getTrainedModel(path)
+    print(best_epoch, best_metric)
     model.summary()
 
 
